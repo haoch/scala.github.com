@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Default Parameter values
+title: 默认参量值
 
 disqus: true
 
@@ -8,9 +8,9 @@ tutorial: scala-tour
 num: 34
 ---
 
-Scala provides the ability to give parameters default values that can be used to allow a caller to omit those parameters.
+Scala提供为参量设置默认值的能力，可用于允许调用者省略他们的参量。
 
-In Java, one tends to see a lot of overloaded methods that only serve to provide default values for certain parameters of a large method.  This is especially true with constructors:
+Java中，会倾向于看到许多重载方法，只是为了给一个大的方法的特定参量提供默认值。这点在构造函数中尤为明显：
 
     public class HashMap<K,V> {
       public HashMap(Map<? extends K,? extends V> m);
@@ -23,9 +23,9 @@ In Java, one tends to see a lot of overloaded methods that only serve to provide
       public HashMap(int initialCapacity, float loadFactor);
     }
 
-There's really only two constructors here; one that takes another map, and one that takes a capacity and load factor.  The third and fourth constructors are there to allow users of <code>HashMap</code> to create instances with the probably-good-for-most-cases defaults of both load factor and capacity.
+这里真的只有两个构造函数；一个接收另外一个映射，而一个接收一个容量和载入因数。第三个和第四个构造函数在那里是为了允许`HashMap`的用户以大多数情况下可能最优的默认载入因数和容量来创建实例。
 
-More problematic is that the values used for defaults are in both the Javadoc *and* the code.  Keeping this up to date is easily forgotten.  A typical pattern around this would be to add public constants whose values will show up in the Javadoc:
+更有问题的是默认使用的值同时存在于Javadoc*和*代码中。很容易忘记保持更新。关于这一点典型的模式是添加到公开的常量中，它的值也会在Javadoc中显示。
 
     public class HashMap<K,V> {
       public static final int DEFAULT_CAPACITY = 16;
@@ -41,9 +41,8 @@ More problematic is that the values used for defaults are in both the Javadoc *a
       public HashMap(int initialCapacity, float loadFactor);
     }
 
-While this keeps us from repeating ourselves, it's less than expressive.  
-
-Scala adds direct support for this:
+虽然它使得我们避免重复自己，但是并不那么具有表现力。
+Scala对此添加了直接的支持：
 
     class HashMap[K,V](initialCapacity:Int = 16, loadFactor:Float = 0.75) {
     }
@@ -61,5 +60,4 @@ Scala adds direct support for this:
     // named arguments
     val m4 = new HashMap[String,Int](loadFactor = 0.8)
 
-Note how we can take advantage of *any* default value by using [named parameters]({{ site.baseurl }}/tutorials/tour/named-parameters.html).
-
+注意我们能怎样通过使用[命名参量](named-parameters.html)发挥`任何`默认值的优势。
