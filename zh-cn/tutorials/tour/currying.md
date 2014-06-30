@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Currying
+title: 柯里化
 
 disqus: true
 
@@ -8,9 +8,9 @@ tutorial: scala-tour
 num: 15
 ---
 
-Methods may define multiple parameter lists. When a method is called with a fewer number of parameter lists, then this will yield a function taking the missing parameter lists as its arguments.
+方法可能定义多个参数列表。当一个方法被较少数量的参数列表调用时，那么它将会产生一个接受缺少的参数列表作为它的参数的函数。
 
-Here is an example:
+这里有个例子：
 
     object CurryTest extends App {
     
@@ -26,9 +26,9 @@ Here is an example:
       println(filter(nums, modN(3)))
     }
 
-_Note: method `modN` is partially applied in the two `filter` calls; i.e. only its first argument is actually applied. The term `modN(2)` yields a function of type `Int => Boolean` and is thus a possible candidate for the second argument of function `filter`._
+_注意：方法`modN`在两次`filter`的调用中被部分使用；也就是只有它的第一个参数被实际使用到。`modN(2)`这句生成了一个`Int => Boolean`类型的函数，而且因此成为了函数`filter`的第二个参数的可能候选。_
 
-Here's the output of the program above:
+上面程序的输出如下：
 
     List(2,4,6,8)
     List(3,6)
