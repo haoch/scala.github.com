@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Implicit Parameters
+title: 隐式参数
 
 disqus: true
 
@@ -8,14 +8,15 @@ tutorial: scala-tour
 num: 10
 ---
 
-A method with _implicit parameters_ can be applied to arguments just like a normal method. In this case the implicit label has no effect. However, if such a method misses arguments for its implicit parameters, such arguments will be automatically provided.
+有 _隐式参数_ 的方法能够像普通方法一样应用于参量。这种情况中隐式标签没有效果。然而，如果这样一个方法缺少针对它的隐式参数的参量时，这些参量将会自动提供。
 
-The actual arguments that are eligible to be passed to an implicit parameter fall into two categories:
-* First, eligible are all identifiers x that can be accessed at the point of the method call without a prefix and that denote an implicit definition or an implicit parameter.
-* Second, eligible are also all members of companion modules of the implicit parameter's type that are labeled implicit.
+符合条件地传给隐式参数的实际参量归为两类：
 
-In the following example we define a method `sum` which computes the sum of a list of elements using the monoid's `add` and `unit` operations. Please note that implicit values can not be top-level, they have to be members of a template.
- 
+* 首先，符合所有标识符 x 都能够从不需要前缀的方法调用中访问，并且表示一个隐式定义或者一个隐式参数。
+* 其次，要符合隐式参数类型的相邻模块的所有成员也都标记为隐式的。
+
+接下来的例子中我们定义了一个方法`sum`，利用独异点（monoid）的`add`和`unit`操作计算一系列成员的和。请注意隐式值不能是顶层的，它们必须是模版的成员。
+
     abstract class SemiGroup[A] {
       def add(x: A, y: A): A
     }
@@ -39,7 +40,7 @@ In the following example we define a method `sum` which computes the sum of a li
       println(sum(List("a", "b", "c")))
     }
 
-Here is the output of the Scala program:
+这是这个Scala程序的输出：
 
     6
     abc
