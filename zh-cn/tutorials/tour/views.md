@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Views
+title: 视图
 
 disqus: true
 
@@ -8,20 +8,21 @@ tutorial: scala-tour
 num: 32
 ---
 
-[Implicit parameters](implicit-parameters.html) and methods can also define implicit conversions called _views_. A view from type `S` to type `T` is defined by an implicit value which has function type `S => T`, or by an implicit method convertible to a value of that type.
+[隐式参数](implicit-parameters.html)和方法也可以定义称为 _视图_ 的隐式转换。从类型`S`到类型`T`的视图是由具有函数类型`S => T`的隐式值或者可转换为该类型某个值的隐式方法来定义。
 
-Views are applied in two situations:
-* If an expression `e` is of type `S`, and `S` does not conform to the expression's expected type `T`.
-* In a selection `e.m` with `e` of type `T`, if the selector `m` does not denote a member of `T`.
+视图适用于两种情况：
 
-In the first case, a view `v` is searched which is applicable to `e` and whose result type conforms to `T`. 
-In the second case, a view `v` is searched which is applicable to `e` and whose result contains a member named `m`.
+* 如果表达式`e`是类型`S`，而`S`并不符合表达式的期望类型`T`。
+* 在选择`T`类型的`e`的`e.m`中，如果选择`m`不表示`T`的成员。
 
-The following operation on the two lists xs and ys of type `List[Int]` is legal:
+在第一种情况下，视图`v`中搜索适用于`e`，而结果类型符合`T`。
+在第二种情况下，视图`v`中搜索适用于`e`，而结果包含名为`m`的成员。
 
-    xs <= ys
+下面的基于两个`List[Int]`类型的列表xs和ys的操作是合法的：
 
-assuming the implicit methods `list2ordered` and `int2ordered` defined below are in scope:
+	xs <= ys
+
+假设下面定义的隐式方法`list2ordered`和`int2ordered`在范围内：
 
     implicit def list2ordered[A](x: List[A])
         (implicit elem2ordered: a => Ordered[A]): Ordered[List[A]] =
@@ -29,14 +30,14 @@ assuming the implicit methods `list2ordered` and `int2ordered` defined below are
     
     implicit def int2ordered(x: Int): Ordered[Int] = 
       new Ordered[Int] { /* .. */ }
-  
-The `list2ordered` function can also be expressed with the use of a _view bound_ for a type parameter:
+
+该`list2ordered`函数也可以表示对于类型参数的 _视图界限_ 的使用：
 
     implicit def list2ordered[A <% Ordered[A]](x: List[A]): Ordered[List[A]] = ...
-  
-The Scala compiler then generates code equivalent to the definition of `list2ordered` given above.
+    
+Scala编译器然后生成代码等价于上面给出的`list2ordered`的定义。
 
-The implicitly imported object `scala.Predef` declares several predefined types (e.g. `Pair`) and methods (e.g. `assert`) but also several views. The following example gives an idea of the predefined view `charWrapper`:
+隐式导入的对象`scala.Predef` 声明了多个预定义类型（例如`Pair`）和方法（例如`assert`），但也有几个视图。下面的例子预定义视图`charWrapper`的思想：
 
     final class RichChar(c: Char) {
       def isDigit: Boolean = Character.isDigit(c)
