@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Mixin Class Composition
+title: 混入类合成
 
 disqus: true
 
@@ -8,21 +8,21 @@ tutorial: scala-tour
 num: 12
 ---
 
-As opposed to languages that only support _single inheritance_, Scala has a more general notion of class reuse. Scala makes it possible to reuse the _new member definitions of a class_ (i.e. the delta in relationship to the superclass) in the definition of a new class. This is expressed as a _mixin-class composition_. Consider the following abstraction for iterators.
- 
+相对于只支持 _单一继承_ 的语言，Scala有一个更加通用的类重用的概念。Scala允许定义新类的时候重用 _一个类中新增的成员定义_ （即相较于其父类的差异之处）。表达为一个 _混入类合成_ 。考虑下面对于迭代器的抽象：
+
     abstract class AbsIterator {
       type T
       def hasNext: Boolean
       def next: T
     }
- 
-Next, consider a mixin class which extends `AbsIterator` with a method `foreach` which applies a given function to every element returned by the iterator. To define a class that can be used as a mixin we use the keyword `trait`.
+
+接下来， 考虑一个继承至`AbsIterator`的混入类，有一个`foreach`方法，将给定函数应用于迭代器返回的每个元素。为了定义一个能被用作混入类的类，我们采用关键字`trait`。
  
     trait RichIterator extends AbsIterator {
       def foreach(f: T => Unit) { while (hasNext) f(next) }
     }
- 
-Here is a concrete iterator class, which returns successive characters of a given string:
+
+这里有一个具体的迭代器类，返回给定字符串的连续字符：
  
     class StringIterator(s: String) extends AbsIterator {
       type T = Char
@@ -30,8 +30,8 @@ Here is a concrete iterator class, which returns successive characters of a give
       def hasNext = i < s.length()
       def next = { val ch = s charAt i; i += 1; ch }
     }
- 
-We would like to combine the functionality of `StringIterator` and `RichIterator` into a single class. With single inheritance and interfaces alone this is impossible, as both classes contain member impementations with code. Scala comes to help with its _mixin-class composition_. It allows the programmers to reuse the delta of a class definition, i.e., all new definitions that are not inherited. This mechanism makes it possible to combine `StringIterator` with `RichIterator`, as is done in the following test program which prints a column of all the characters of a given string.
+
+我们想将`StringIterator`和`RichIterator`的功能合并到一个类中。单独利用单一继承和接口是不可能的，因为两个类都包含成员的代码实现。Scala借助于它的 _混入类合成_ 。它允许程序员重用类定义的不同点，也就是所有没有继承的新的定义。这个机制使得可以合并`StringIterator`和`RichIterator`，正如下面测试程序所做的，打印一列给定字符串的所有字符。
  
     object StringIteratorTest {
       def main(args: Array[String]) {
@@ -40,5 +40,5 @@ We would like to combine the functionality of `StringIterator` and `RichIterator
         iter foreach println
       }
     }
- 
-The `Iter` class in function `main` is constructed from a mixin composition of the parents `StringIterator` and `RichIterator` with the keyword `with`. The first parent is called the _superclass_ of `Iter`, whereas the second (and every other, if present) parent is called a _mixin_.
+
+`main`函数中的`Iter`类是利用关键字`with`通过父亲`StringIterator`和`RichIterator`的混入类组合构造而成。第一个父亲称之为 `Iter`的 _超类_ ， 而第二个（以及其他任何声明的）父亲称之为一个 _混入类_
