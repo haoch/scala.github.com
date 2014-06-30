@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Automatic Type-Dependent Closure Construction
+title: 自动类型依赖闭包构造 
 
 disqus: true
 
@@ -8,9 +8,9 @@ tutorial: scala-tour
 num: 16
 ---
 
-Scala allows parameterless function names as parameters of methods. When such a method is called, the actual parameters for parameterless function names are not evaluated and a nullary function is passed instead which encapsulates the computation of the corresponding parameter (so-called *call-by-name* evalutation).
+Scala允许无参函数名作为方法参数。当此类方法被调用时，这个无参函数名的实际参数并没有被执行，而是传入一个空元函数，囊括了对应参数的计算（所谓的 *按名调用* 执行）。
 
-The following code demonstrates this mechanism:
+下面的代码展示了这个机制：
 
     object TargetTest1 extends App {
       def whileLoop(cond: => Boolean)(body: => Unit): Unit =
@@ -25,11 +25,11 @@ The following code demonstrates this mechanism:
       }
     }
 
-The function `whileLoop` takes two parameters `cond` and `body`. When the function is applied, the actual parameters do not get evaluated. But whenever the formal parameters are used in the body of `whileLoop`, the implicitly created nullary functions will be evaluated instead. Thus, our method `whileLoop` implements a Java-like while-loop with a recursive implementation scheme.
+函数`whileLoop`接受两个参数`cond`和`body`。当这个函数被使用时，实际参数并没有被执行。但是无论什么时候这个真正的参数在`whileLoop`的主体中被使用到，隐式创建的空元函数将被执行。因此，我们的方法`whileLoop`利用递归实现了一个类-Java的while-loop。
 
-We can combine the use of [infix/postfix operators](operators.html) with this mechanism to create more complex statements (with a nice syntax).
+我们利用这种机制能够结合使用[前缀／后缀操作符](operators.html) 来创造更多复杂的语句（拥有优美语法）。
 
-Here is the implementation of a loop-unless statement:
+这里是一个loop-unless语句的实现：
 
     object TargetTest2 extends App {
       def loop(body: => Unit): LoopUnlessCond =
@@ -46,9 +46,10 @@ Here is the implementation of a loop-unless statement:
         i -= 1
       } unless (i == 0)
     }
-The `loop` function just accepts a body of a loop and returns an instance of class `LoopUnlessCond` (which encapsulates this body object). Note that the body didn't get evaluated yet. Class `LoopUnlessCond` has a method `unless` which we can use as a *infix operator*. This way, we achieve a quite natural syntax for our new loop: `loop { < stats > } unless ( < cond > )`.
 
-Here's the output when `TargetTest2` gets executed:
+这个`loop`函数仅接受一个循环的主题并返回一个`LoopUnlessCond`的实际例（囊括这个主体对象）。注意这个主题尚未执行。类`LoopUnlessCond`有一个方法`unless`，我们能用作*中缀操作符*。这样，我们便为我们的新循环创造了一个相当自然的语法：`loop { < stats > } unless ( < cond > )`.
+
+这里是`TargetTest2`执行时的输出：
 
     i = 10
     i = 9
