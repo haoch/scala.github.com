@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Compound Types
+title: 混合类型
 
 disqus: true
 
@@ -8,9 +8,9 @@ tutorial: scala-tour
 num: 6
 ---
 
-Sometimes it is necessary to express that the type of an object is a subtype of several other types. In Scala this can be expressed with the help of *compound types*, which are intersections of object types.
+有些时候需要表示一个对象的类型是多个其他类型的子类型。Scala中可以借助*混合类型*来表达，是这些对象类型的交集。
 
-Suppose we have two traits `Cloneable` and `Resetable`:
+假设我们有两个特性`Cloneable`和`Resetable`：
 
     trait Cloneable extends java.lang.Cloneable {
       override def clone(): Cloneable = { 
@@ -21,7 +21,7 @@ Suppose we have two traits `Cloneable` and `Resetable`:
       def reset: Unit
     }
 
-Now suppose we want to write a function `cloneAndReset` which takes an object, clones it and resets the original object:
+现在假设我们想要写一个函数`cloneAndReset`，接受一个对象，克隆它并且重置原始对象：
 
     def cloneAndReset(obj: ?): Cloneable = {
       val cloned = obj.clone()
@@ -29,15 +29,14 @@ Now suppose we want to write a function `cloneAndReset` which takes an object, c
       cloned
     }
 
-The question arises what the type of the parameter `obj` is. If it's `Cloneable` then the object can be `clone`d, but not `reset`; if it's `Resetable` we can `reset` it, but there is no `clone` operation. To avoid type casts in such a situation, we can specify the type of `obj` to be both `Cloneable` and `Resetable`. This compound type is written like this in Scala: `Cloneable with Resetable`.
+问题在于参数`obj`的类型是什么。如果是`Cloneable`，那么这个对象能够被`clone`，但不能`reset`；如果是`Resetable`，我们能够`reset`它，但是没有`clone`操作。为了避免这样情况下的类型转换，我们能指定`obj`的类型同时是`Cloneable`和`Resetable`。这个混合类型Scala中写作：`Cloneable with Resetable`。
 
-Here's the updated function:
+这里是更新后的函数：
 
     def cloneAndReset(obj: Cloneable with Resetable): Cloneable = {
       //...
     }
 
-Compound types can consist of several object types and they may have a single refinement which can be used to narrow the signature of existing object members.
-The general form is: `A with B with C ... { refinement }`
+混合类型可以由多个对象类型构成，而且他们可以使用单一的改良，从而精简现有对象成员的声明。通常格式是：`A with B with C ... { refinement }`
 
-An example for the use of refinements is given on the page about [abstract types](abstract-types.html). 
+在关于抽象类型[abstract types](abstract-types.html)的页面中给出过一个关于改良的使用的例子. 
