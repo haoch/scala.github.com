@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Abstract Types
+title: 抽象类型
 languages:[en,es,"zh-cn"]
 
 disqus: true
@@ -12,12 +12,11 @@ outof: 35
 
 Scala中，类可以按值（构造器参数）和按类型（如果类是[范型](generic-classes.html)）传递参数。为了整齐的缘故，不仅仅可以把值作为对象成员，与值一起的类型也是对象的成员。此外，两种形式的成员都可以被具体化和抽象化。
 这里有一个例子，同时将一个后面值的定义和一个抽象类型的定义作为`Buffer`[类](traits.html)的成员。
- 
+
     trait Buffer {
       type T
       val element: T
     }
- 
 
 *抽象类型*是指定义不是明确已知的类型。在上述例子中，我们只能知道`Buffer`类的每个对象都有一个类型成员`T`，但是`Buffer`类的定义不需要透露成员类型`T`对应的具体类型。就像值的定义一样，我们能够在子类中重载类型定义。这允许我们通过绑定类型范围（即描述抽象类型可能的具体实例）透露关于抽象类型的更多信息
 
