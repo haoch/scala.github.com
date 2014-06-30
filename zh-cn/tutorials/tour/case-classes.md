@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Case Classes
+title: 实例类
 
 disqus: true
 
@@ -8,27 +8,27 @@ tutorial: scala-tour
 num: 5
 ---
 
-Scala supports the notion of _case classes_. Case classes are regular classes which export their constructor parameters and which provide a recursive decomposition mechanism via [pattern matching](pattern-matching.html).
+Scala支持 _实例类_ 的概念。实例类是普通类，可以导出他们的构造器参数，并且利用[模式匹配](pattern-matching.html)提供一种递归分解的机制。
 
-Here is an example for a class hierarchy which consists of an abstract super class `Term` and three concrete case classes `Var`, `Fun`, and `App`.
+这里是一个类的层级的例子，由一个抽象父类`Term`以及三个具体实例类`Var`，`Fun`，和`App`组成。
 
     abstract class Term
     case class Var(name: String) extends Term
     case class Fun(arg: String, body: Term) extends Term
     case class App(f: Term, v: Term) extends Term
 
-This class hierarchy can be used to represent terms of the [untyped lambda calculus](http://www.ezresult.com/article/Lambda_calculus). To facilitate the construction of case class instances, Scala does not require that the `new` primitive is used. One can simply use the class name as a function.
+这个类层级可以用于表示[无类型λ微积分](http://www.ezresult.com/article/Lambda_calculus)。为了帮组实例类实例的创建，Scala不要求使用`new`关键字。可以简单的将类名用作函数。
 
-Here is an example:
+这里有个例子：
 
     Fun("x", Fun("y", App(Var("x"), Var("y"))))
 
-The constructor parameters of case classes are treated as public values and can be accessed directly.
+实例类的构造器参数作为公开值并可以直接访问。
 
     val x = Var("x")
     println(x.name)
 
-For every case class the Scala compiler generates an `equals` method which implements structural equality and a `toString` method. For instance:
+对于每个实例类，Scala编译器生成一个实现结构相等的`equals`方法和一个`toString`方法。实例：
 
     val x1 = Var("x")
     val x2 = Var("x")
@@ -36,11 +36,13 @@ For every case class the Scala compiler generates an `equals` method which imple
     println("" + x1 + " == " + x2 + " => " + (x1 == x2))
     println("" + x1 + " == " + y1 + " => " + (x1 == y1))
 
-will print
+将打印：
 
     Var(x) == Var(x) => true
     Var(x) == Var(y) => false
 
+
+只有当模式匹配是用于分解数据结构，定义实例类才是合理的。下面的对象为我们的λ微积分的表现方法定义了一个漂亮的打印函数
 It makes only sense to define case classes if pattern matching is used to decompose data structures. The following object defines a pretty printer function for our lambda calculus representation:
 
     object TermTest extends scala.App {
@@ -71,5 +73,6 @@ It makes only sense to define case classes if pattern matching is used to decomp
       println(isIdentityFun(t))
     }
 
-In our example, the function `printTerm` is expressed as a pattern matching statement starting with the `match` keyword and consisting of sequences of `case Pattern => Body` clauses.
-The program above also defines a function `isIdentityFun` which checks if a given term corresponds to a simple identity function. This example uses deep patterns and guards. After matching a pattern with a given value, the guard (defined after the keyword `if`) is evaluated. If it returns `true`, the match succeeds; otherwise, it fails and the next pattern will be tried.
+我们的例子中，函数`printTerm`表达了一个模式匹配语句，已`match`关键字
+开头并且由一系列`case Pattern => Body`分句构成。
+上述程序还定义了一个函数`isIdentityFun`，用来检查是否给定的术语对应着一个简单恒等函数。这个例子采用深度模式和保护。给定值匹配一个模式后，保护（关键字`if`后定义的）被执行。如果它返回`true`，则匹配成功；否则，失败并且尝试下一个模式。
