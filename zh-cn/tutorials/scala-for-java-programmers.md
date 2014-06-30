@@ -1,6 +1,6 @@
 ---
 layout: overview
-title: Java程序员的Scala指南
+title: 面向Java程序员的Scala指南
 overview: scala-for-java-programmers
 
 disqus: true
