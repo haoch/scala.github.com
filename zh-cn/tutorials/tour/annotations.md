@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Annotations
+title: 注释
 
 disqus: true
 
@@ -8,13 +8,13 @@ tutorial: scala-tour
 num: 3
 ---
 
-Annotations associate meta-information with definitions.
+注释将元信息和定义关联到一起。
 
-A simple annotation clause has the form `@C` or `@C(a1, .., an)`. Here, `C` is a constructor of a class `C`, which must conform to the class `scala.Annotation`. All given constructor arguments `a1, .., an` must be constant expressions (i.e., expressions on numeral literals, strings, class literals, Java enumerations and one-dimensional arrays of them).
+简单的注释从句的格式有`@C`或`@C(a1, .., an)`。这里`C`是一个类`C`的构造器，必须遵从类`scala.Annotation`。所有指定的构造器参数`a1, .., an`必须是常量表达式（例如，数值序列，字符串，类序列，Java枚举，以及他们的一维数组）。
 
-An annotation clause applies to the first definition or declaration following it. More than one annotation clause may precede a definition and declaration. The order in which these clauses are given does not matter.
+注释从句作用于后面第一个定义或者声明。一个定义或者声明之前可能有不止一个注释从句。这些从句给出的顺序没有影响。
 
-The meaning of annotation clauses is _implementation-dependent_. On the Java platform, the following Scala annotations have a standard meaning.
+注释从句的意义在于 _实现依赖_ 。Java平台中，下面的Scala注释有对应的标准含义。
 
 |           Scala           |           Java           |
 |           ------          |          ------          |
@@ -31,10 +31,11 @@ The meaning of annotation clauses is _implementation-dependent_. On the Java pla
 |  [`scala.volatile`](http://www.scala-lang.org/api/2.9.1/scala/volatile.html) |  [`volatile`](http://java.sun.com/docs/books/tutorial/java/nutsandbolts/_keywords.html) (keyword) |
 |  [`scala.reflect.BeanProperty`](http://www.scala-lang.org/api/2.9.1/scala/reflect/BeanProperty.html) |  [`Design pattern`](http://docs.oracle.com/javase/tutorial/javabeans/writing/properties.html) |
 
+下面例子中我们为方法`read`的定义添加`throws`注释，为了捕获Java主程序抛出的异常。
 In the following example we add the `throws` annotation to the definition of the method `read` in order to catch the thrown exception in the Java main program.
 
-> A Java compiler checks that a program contains handlers for [checked exceptions](http://docs.oracle.com/javase/specs/jls/se5.0/html/exceptions.html) by analyzing which checked exceptions can result from execution of a method or constructor. For each checked exception which is a possible result, the **throws** clause for the method or constructor _must_ mention the class of that exception or one of the superclasses of the class of that exception.
-> Since Scala has no checked exceptions, Scala methods _must_ be annotated with one or more `throws` annotations such that Java code can catch exceptions thrown by a Scala method.
+> Java编译器通过分析在方法或者构造器执行过程可能产生哪些异常，来检查程序是否包含对[被检查的异常](http://docs.oracle.com/javase/specs/jls/se5.0/html/exceptions.html)的处理。对于被检查的每个可能产生的异常，方法或构造器的**throws**从句 _必须_ 提到那个异常类或者那个异常类的一个子类。
+> 由于Scala不检查异常，Scala方法 _必须_ 标注一个或多个`throws`注释，以便于Java代码能够捕获Scala方法抛出的异常。
 
     package examples
     import java.io._
@@ -44,7 +45,7 @@ In the following example we add the `throws` annotation to the definition of the
       def read() = in.read()
     }
 
-The following Java program prints out the contents of the file whose name is passed as the first argument to the `main` method.
+下面的Java程序打印以main方法传入第一个参数命名的文件的内容。
 
     package test;
     import examples.Reader;  // Scala class !!
@@ -62,7 +63,7 @@ The following Java program prints out the contents of the file whose name is pas
         }
     }
 
-Commenting out the `throws` annotation in the class Reader produces the following error message when compiling the Java main program:
+注释掉Reader类的`throws`注解会在编译这个Java主程序产生下面的错误信息：
 
     Main.java:11: exception java.io.IOException is never thrown in body of
     corresponding try statement
@@ -70,61 +71,60 @@ Commenting out the `throws` annotation in the class Reader produces the followin
               ^
     1 error
 
+### Java 注释
+
+**注意** 请确保将`-target:jvm-1.5`选项与Java注释一同使用。
+
+Java 1.5 介绍了以[注释](http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html)的形式的用户定义元数据。注释的一个关键的特性是基于特定的名－值对来初始化他们的元素。
+
 ### Java Annotations ###
 
-**Note:** Make sure you use the `-target:jvm-1.5` option with Java annotations.
-
-Java 1.5 introduced user-defined metadata in the form of [annotations](http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html). A key feature of annotations is that they rely on specifying name-value pairs to initialize their elements. For instance, if we need an annotation to track the source of some class we might define it as
+**Note:** Make sure you use the `-target:jvm-1.5` option with Java annotations.如果我们需要一个注释来跟踪某个类的源文件的情况下，我们可能定义成：
 
     @interface Source {
       public String URL();
       public String mail();
     }
 
-And then apply it as follows
+并且像下面这样应用它
 
     @Source(URL = "http://coders.com/",
             mail = "support@coders.com")
     public class MyClass extends HisClass ...
 
-An annotation application in Scala looks like a constructor invocation, for instantiating a Java annotation one has to use named arguments:
+Scala的一个注释程序看起来像一个构造器行为，为了表示一个Java注释，必须使用命名参数：
 
     @Source(URL = "http://coders.com/",
             mail = "support@coders.com")
     class MyScalaClass ...
 
-This syntax is quite tedious if the annotation contains only one element (without default value) so, by convention, if the name is specified as `value` it can be applied in Java using a constructor-like syntax:
+如果注释只包含一个元素（没有默认值），语法相当单调，所以为了方便，如果名称被指定为`value`，能够用一种类似构造函数的语法应用到Java中：
 
     @interface SourceURL {
         public String value();
         public String mail() default "";
     }
 
-And then apply it as follows
+并且可以像这样使用它
 
     @SourceURL("http://coders.com/")
     public class MyClass extends HisClass ...
 
-In this case, Scala provides the same possibility
+这种用法在Scala中同样可行
 
     @SourceURL("http://coders.com/")
     class MyScalaClass ...
 
-The `mail` element was specified with a default value so we need not explicitly provide a value for it. However, if we need to do it we can not mix-and-match the two styles in Java:
+`mail`元素指定了一个默认值，所以我们不需要显式为它赋值。然而，如果我们需要这么做，我们不能在Java中混用两种方式！
 
     @SourceURL(value = "http://coders.com/",
                mail = "support@coders.com")
     public class MyClass extends HisClass ...
 
-Scala provides more flexibility in this respect
+Scala在这个方面提供更多灵活性
 
     @SourceURL("http://coders.com/",
                mail = "support@coders.com")
         class MyScalaClass ...
 
-This extended syntax is consistent with .NET's annotations and can accomodate their full capabilites.
-
-
-
-
-
+这个扩展的语法是与.NET的注释一致的，并且能涵盖他们的所有能力。
