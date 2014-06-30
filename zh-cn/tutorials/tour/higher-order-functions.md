@@ -1,6 +1,7 @@
+
 ---
 layout: tutorial
-title: Higher-order Functions
+title: 高阶函数
 
 disqus: true
 
@@ -8,14 +9,14 @@ tutorial: scala-tour
 num: 18
 ---
 
-Scala allows the definition of higher-order functions. These are functions that _take other functions as parameters_, or whose _result is a function_. Here is a function `apply` which takes another function `f` and a value `v` and applies function `f` to `v`:
+Scala允许定义高阶函数。这是指 _将其他函数作为参数_ ，或者 _结果是一个函数_ 的函数。这里是函数`apply`，以另一个函数`f`和一个值`v`，并且将函数`f`应用于`v`：
 
     def apply(f: Int => String, v: Int) = f(v)
 
-_Note: methods are automatically coerced to functions if the context requires this._
+_注意：如果上下文需要，方法会自动强制转化为函数_
 
-Here is another example:
- 
+这里是另一个例子
+
     class Decorator(left: String, right: String) {
       def layout[A](x: A) = left + x.toString() + right
     }
@@ -25,9 +26,9 @@ Here is another example:
       val decorator = new Decorator("[", "]")
       println(apply(decorator.layout, 7))
     }
- 
-Execution yields the output:
+    
+执行会产生输出：
 
     [7]
 
-In this example, the method `decorator.layout` is coerced automatically to a value of type `Int => String` as required by method `apply`. Please note that method `decorator.layout` is a _polymorphic method_ (i.e. it abstracts over some of its signature types) and the Scala compiler has to instantiate its method type first appropriately.
+这个例子中，方法`decorator.layout`应方法`apply`的要求自动强制转化为类型`Int => String`的值。请注意方法`decorator.layout`是一个 _多态方法_ （即它对它的一些签名类型进行了抽象），而且Scala编译器必须首先恰当地实例化它的方法类型。
