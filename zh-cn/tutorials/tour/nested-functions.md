@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Nested Functions
+title: 嵌套函数
 
 disqus: true
 
@@ -8,7 +8,7 @@ tutorial: scala-tour
 num: 13
 ---
 
-In Scala it is possible to nest function definitions. The following object provides a `filter` function for extracting values from a list of integers that are below a threshold value:
+Scala中可以嵌套函数定义。下面的对象提供了一个`filter`函数来从一个整数的列表中抽取低于一个临界值的值：
 
     object FilterTest extends App {
       def filter(xs: List[Int], threshold: Int) = {
@@ -21,8 +21,8 @@ In Scala it is possible to nest function definitions. The following object provi
       println(filter(List(1, 9, 2, 8, 3, 7, 4), 5))
     }
 
-_Note: the nested function `process` refers to variable `threshold` defined in the outer scope as a parameter value of `filter`._
+_注意：嵌套函数`process`引用定义在外部范围的变量`threshold`作为`filter`的参数值。_
 
-The output of this program is:
+这个程序的输入是：
 
     List(1,2,3,4)
