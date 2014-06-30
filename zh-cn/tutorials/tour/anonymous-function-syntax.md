@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Anonymous Function Syntax
+title: 匿名函数语法
 
 disqus: true
 
@@ -8,31 +8,31 @@ tutorial: scala-tour
 num: 14
 ---
 
-Scala provides a relatively lightweight syntax for defining anonymous functions. The following expression creates a successor function for integers:
+Scala提供一套相当轻量级的语法来定义匿名函数。下述表达式创建了一个整数的递增函数（successor function）：
 
     (x: Int) => x + 1
 
-This is a shorthand for the following anonymous class definition:
+这种语法是下面匿名类定义的缩写：
 
     new Function1[Int, Int] {
       def apply(x: Int): Int = x + 1
     }
 
-It is also possible to define functions with multiple parameters:
+也可以定义多个参数的函数：
 
     (x: Int, y: Int) => "(" + x + ", " + y + ")"
 
-or with no parameter:
+或者没有参数：
 
     () => { System.getProperty("user.dir") }
 
-There is also a very lightweight way to write function types. Here are the types of the three functions defined above:
+也有一套非常轻量级的方式来写函数类型。这里是上述三个函数的类型：
 
     Int => Int
     (Int, Int) => String
     () => String
 
-This syntax is a shorthand for the following types:
+这种语法是下面类型的缩写：
 
     Function1[Int, Int]
     Function2[Int, Int, String]
