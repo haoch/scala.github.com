@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: XML Processing
+title: XML 处理
 
 disqus: true
 
@@ -8,12 +8,13 @@ tutorial: scala-tour
 num: 33
 ---
 
-Scala can be used to easily create, parse, and process XML documents. XML data can be represented in Scala either by using a generic data representation, or with a data-specific data representation. The latter approach is supported by the *data-binding* tool `schema2src`.
+Scala能够很容易地创建，解析和处理XML文档。XML数据在Scala中能以一种通用的数据形式，或者带有特定数据的数据形式来表示。后者由*数据绑定* 工具`schema2src`支持。
 
-### Runtime Representation ###
-XML data is represented as labeled trees. Starting with Scala 1.2 (previous versions need to use the -Xmarkupoption), you can conveniently create such labeled nodes using standard XML syntax.
+### 运行时表示 ###
 
-Consider the following XML document:
+XML 数据被表示为标记树。Scala 1.2（之前版本需要使用 -Xmarkupoption）开始，你可以使用标准XML语法方便地创建这样地标记节点。
+
+看看以下XML文档：
 
     <html>
       <head>
@@ -25,7 +26,7 @@ Consider the following XML document:
       </body>
     </html>
 
-This document can be created by the following Scala program:
+这份文件可通过下面地Scala程序创建:
 
     object XMLTest1 extends App {
       val page = 
@@ -41,7 +42,7 @@ This document can be created by the following Scala program:
       println(page.toString())
     }
 
-It is possible to mix Scala expressions and XML:
+可以混用Scala语法和XML:
 
     object XMLTest2 extends App {
       import scala.xml._
@@ -54,7 +55,6 @@ It is possible to mix Scala expressions and XML:
       println(theDate("John Doe").toString())
     }
 
-### Data Binding ###
-It many cases, you have a DTD for the XML documents you want to process. You will want to create special Scala classes for it, and some code to parse the XML, and to save. Scala comes with a nifty tool that turns your DTDs into a collection of Scala class definitions which do all of this for you.
-Note that documentation and examples on the schema2src tool can be found in Burak's [draft scala xml book](http://burak.emir.googlepages.com/scalaxbook.docbk.html).
+### 数据绑定 ###
+许多时候下，你需要拥有你所处理地XML文档地DTD。你可能会想创建特殊地Scala类，和一些代码来解析XML，并保存。Scala自带一个非常棒地工具将会你的DTD转化为一系列Scala类定义，所有这些都是为了你。注意schema2src工具的文档和例子是无法在Burak书[初级Scala XML书]((http://burak.emir.googlepages.com/scalaxbook.docbk.html)中找到。
 
