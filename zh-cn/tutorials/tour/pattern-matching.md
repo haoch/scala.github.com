@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Pattern Matching
+title: 模式匹配
 
 disqus: true
 
@@ -8,8 +8,8 @@ tutorial: scala-tour
 num: 20
 ---
 
-Scala has a built-in general pattern matching mechanism. It allows to match on any sort of data with a first-match policy. 
-Here is a small example which shows how to match against an integer value:
+Scala有内置通用模式匹配机制。它遵循首次匹配策略，允许匹配任何形式的数据。
+这里是一个小例子显示如何针对整数值进行匹配：
 
     object MatchTest1 extends App {
       def matchTest(x: Int): String = x match {
@@ -20,9 +20,9 @@ Here is a small example which shows how to match against an integer value:
       println(matchTest(3))
     }
 
-The block with the `case` statements defines a function which maps integers to strings. The `match` keyword provides a convenient way of applying a function (like the pattern matching function above) to an object.
+有`case`语句的块定义了一个函数，将整数映射到字符串。`match`关键字提供了一种方便的方式将函数应用于对象（就像上面的模式匹配函数）。
 
-Here is a second example which matches a value against patterns of different types:
+这里是第二个例子，针对不同类型的模式匹配一个值：
 
     object MatchTest2 extends App {
       def matchTest(x: Any): Any = x match {
@@ -33,7 +33,7 @@ Here is a second example which matches a value against patterns of different typ
       println(matchTest("two"))
     }
 
-The first `case` matches if `x` refers to the integer value `1`. The second `case` matches if `x` is equal to the string `"two"`. The third case consists of a typed pattern; it matches against any integer and binds the selector value `x` to the variable `y` of type integer.
+第一个`case`当`x`指带整数值`1`时匹配。第二个`case`当`x`等于字符串`"Two"`时匹配。第三个case由一个类型模式组成；它针对任意整数匹配并且将选择器值`x`绑定至整数类型的变量`y`上。
 
-Scala's pattern matching statement is most useful for matching on algebraic types expressed via [case classes](case-classes.html).
-Scala also allows the definition of patterns independently of case classes, using `unapply` methods in [extractor objects](extractor-objects.html).
+Scala的模式匹配语法在匹配基于[实例类](case-classes.html)表示的代数类型时最有用。
+Scala也允许利用[提取器对象](extractor-objects.html)中的`unapply`方法独立于实例类来定义模式。
