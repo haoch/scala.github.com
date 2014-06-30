@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Upper Type Bounds
+title: 类型上限
 
 disqus: true
 
@@ -8,8 +8,8 @@ tutorial: scala-tour
 num: 25
 ---
 
-In Scala, [type parameters](generic-classes.html) and [abstract types](abstract-types.html) may be constrained by a type bound. Such type bounds limit the concrete values of the type variables and possibly reveal more information about the members of such types. An _upper type bound_ `T <: A` declares that type variable `T` refers to a subtype of type `A`.
-Here is an example which relies on an upper type bound for the implementation of the polymorphic method `findSimilar`:
+Scala中[类型参数](generic-classes.html)和[抽象类型](abstract-types.html)可以通过类型范围来约束。这样的类型范围限制类型的具体值而且可能透露更多关于这些类型的成员信息。 _类型上限_ `T <: A` 声明类型变量`T`指向类型`A`的子类型。
+这里有个例子，依赖于多态方法`findSimilar`实现的类型上限。
 
     trait Similar {
       def isSimilar(x: Any): Boolean
@@ -28,6 +28,6 @@ Here is an example which relies on an upper type bound for the implementation of
       println(findSimilar[MyInt](MyInt(4), list))
       println(findSimilar[MyInt](MyInt(2), list))
     }
-
-Without the upper type bound annotation it would not be possible to call method `isSimilar` in method `findSimilar`.
-The usage of lower type bounds is discussed [here](lower-type-bounds.html). 
+    
+如果没有类型上限标注，不可能在方法`findSimilar`中调用方法`isSimilar`。
+类型下限的用法在[这里](lower-type-bounds.html)讨论。
