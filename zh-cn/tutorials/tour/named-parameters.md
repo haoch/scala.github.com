@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: Named Parameters
+title: 命名参数
 
 disqus: true
 
@@ -8,7 +8,7 @@ tutorial: scala-tour
 num: 35
 ---
 
-When calling methods and functions, you can use the name of the variables expliclty in the call, like so:
+当调用方法和函数时，你能在调用中显式使用变量名，像这样：
 
       def printName(first:String, last:String) = {
         println(first + " " + last)
@@ -21,8 +21,7 @@ When calling methods and functions, you can use the name of the variables explic
       printName(last = "Smith",first = "John")
       // Prints "John Smith"
 
-Note that once you are using parameter names in your calls, the order doesn't matter, so long as all parameters are named.  This
-feature works well with [default parameter values]({{ site.baseurl }}/tutorials/tour/default-parameter-values.html):
+注意一旦你在调用中使用了参数名，只要所有参数都被命名，顺序便没有意义。这个特性与[默认参数值](default-parameter-values.html)配合使用效果很好:
 
       def printName(first:String = "John", last:String = "Smith") = {
         println(first + " " + last)
@@ -31,5 +30,4 @@ feature works well with [default parameter values]({{ site.baseurl }}/tutorials/
       printName(last = "Jones")
       // Prints "John Jones"
 
-Since you can place the parameters in any order you like, you can use the default value for parameters that come first in the
-parameter list.
+由于你能将参数以任何你喜欢的顺序放置，你能在参数列表中优先考虑使用参数的默认值。
